@@ -247,6 +247,9 @@
             due to the difficulty of inferring both geometry and missing texture. We therefore tackle this challenge by 
             cultivating the dark knowledge of pretrained 2D diffusion models. 
         </p>
+        <div>
+            <img src="./static/images/pipeline.jpg" alt="method" class="center">
+          </div>
         <p>
             Specifically, given an input image x, we first hallucinate its underlying 3D representation, neural radiance 
             field (NeRF), whose rendering appears as a plausible sample to a pretrained denoising diffusion model, and 
@@ -257,9 +260,6 @@
             text-to-image generative model and the text-image contrastive model for both stages. 
             In this way, we achieve a faithful 3D representation of the input image with restored high-fidelity texture and geometry.
         </p>
-          </div>
-          <div>
-            <img src="./static/images/pipeline.jpg" alt="method" class="center">
           </div>
       </div>
     </div>
