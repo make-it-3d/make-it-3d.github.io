@@ -219,31 +219,18 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
-          </p>
-          <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
-          </p>
-          <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
+            In this work, we investigate the problem of creating high-fidelity 3D content from only a single image. 
+            This is inherently challenging: it essentially involves estimating the underlying 3D geometry while simultaneously 
+            hallucinating unseen textures. To address this challenge, we leverage prior knowledge from a well-trained 
+            2D diffusion model to act as 3D-aware supervision for 3D creation. Our approach, <span class="dnerf">Make-It-3D</span>, 
+            employs a two-stage optimization pipeline: the first stage optimizes a neural radiance field by incorporating 
+            constraints from 
+            the reference image at the frontal view and diffusion prior at novel views; the second stage transforms 
+            the coarse model into textured point clouds and further elevates the realism with diffusion prior while 
+            leveraging the high-quality textures from the reference image. Extensive experiments demonstrate that our 
+            method outperforms prior works by a large margin, resulting in faithful reconstructions and impressive 
+            visual quality. Our method presents the first attempt to achieve high-quality 3D creation from a single 
+            image for general objects and enables various applications such as text-to-3D creation and texture editing.
           </p>
         </div>
       </div>
@@ -253,11 +240,27 @@
     <!-- Paper video. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
+        <h2 class="title is-3">Pipeline</h2>
+        <div class="content has-text-justified">
+        <p>
+            Generating novel views for general scenes or objects from only a single image is inherently challenging 
+            due to the difficulty of inferring both geometry and missing texture. We therefore tackle this challenge by 
+            cultivating the dark knowledge of pretrained 2D diffusion models. 
+        </p>
+        <p>
+            Specifically, given an input image x, we first hallucinate its underlying 3D representation, neural radiance 
+            field (NeRF), whose rendering appears as a plausible sample to a pretrained denoising diffusion model, and 
+            we constrain this optimization process with the texture and depth supervision at the reference view. 
+            To further improve the rendering realism, we keep the learned geometry and enhance the textures with the 
+            reference image. As such, in the second stage, we lift the input image to textured point clouds and focus 
+            on refining the color of the points occluded in the reference view. We leverage prior knowledge of the 
+            text-to-image generative model and the text-image contrastive model for both stages. 
+            In this way, we achieve a faithful 3D representation of the input image with restored high-fidelity texture and geometry.
+        </p>
+          </div>
+          <div>
+            <img src="./static/images/pipeline.jpg" alt="method" class="center">
+          </div>
       </div>
     </div>
     <!--/ Paper video. -->
